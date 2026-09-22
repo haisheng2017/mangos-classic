@@ -40,7 +40,9 @@ if(BUILD_PLAYERBOTS)
     message(STATUS "Playerbots module already populated: ${playerbots_POPULATED}")
   endif()
 
-  add_subdirectory(${playerbots_SOURCE_DIR})
+  # NOTE: local patch — support FETCHCONTENT_SOURCE_DIR_PLAYERBOTS pointing outside the core tree
+  # (out-of-tree source requires an explicit binary dir, matching the default in-tree location)
+  add_subdirectory(${playerbots_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/modules/PlayerBots)
 
 else()
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/modules/PlayerBots)
