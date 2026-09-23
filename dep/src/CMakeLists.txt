@@ -25,8 +25,19 @@ if(BUILD_EXTRACTORS AND NOT (BZip2_FOUND OR BZIP2_FOUND))
 endif()
 
 # zlib
+# Prefer the SYSTEM zlib package over the download: priority is
+#   1) CONFIG-mode zlib (>= 1.3.2), if a CMake-config package is installed;
+#   2) system zlib via the module-mode find (e.g. apt zlib1g-dev on Ubuntu --
+#      the package ships headers/lib/pkgconfig but no zlibConfig.cmake, so
+#      only this find can see it; keeps configure fully offline);
+#   3) the upstream FetchContent download of madler/zlib v1.3.2 (network,
+#      only for machines without any zlib dev files).
 find_package(ZLIB CONFIG COMPONENTS static)
 if (NOT ZLIB_FOUND OR ZLIB_VERSION_STRING VERSION_LESS 1.3.2)
+  find_package(ZLIB MODULE)
+endif()
+
+if (NOT ZLIB_FOUND)
   FetchContent_Declare(
     zlib
     GIT_REPOSITORY "https://github.com/madler/zlib.git"
