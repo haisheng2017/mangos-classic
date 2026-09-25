@@ -87,6 +87,10 @@ if(MSVC)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
+# Declared before options.cmake so BUILD_MODULE_* exists on the first configure.
+# Sources are resolved later: local checkout if present, otherwise a git fetch.
+set(MODULE_NAMES TRANSMOG DUALSPEC ACHIEVEMENTS BARBER)
+
 # set default buildoptions and print them
 include(cmake/options.cmake)
 
@@ -340,6 +344,11 @@ if(BUILD_PLAYERBOTS)
     set(BUILD_PLAYERBOTS OFF)
     message(STATUS "BUILD_PLAYERBOTS forced to OFF due to BUILD_GAME_SERVER is not set")
   endif()
+endif()
+
+if(BUILD_MODULES AND NOT BUILD_GAME_SERVER)
+  set(BUILD_MODULES OFF)
+  message(STATUS "BUILD_MODULES forced to OFF due to BUILD_GAME_SERVER is not set")
 endif()
 
 if(PCH)
