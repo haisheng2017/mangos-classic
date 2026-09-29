@@ -84,7 +84,7 @@ endfunction()
 # Feature modules before the framework, and both before game, so their targets
 # exist when game links them. The framework is required whenever BUILD_MODULES is on.
 if(BUILD_MODULES)
-  set(_feature_modules transmog dualspec achievements barber)
+  set(_feature_modules transmog dualspec achievements barber immersive)
   set(_enabled_features "")
   foreach(_folder ${_feature_modules})
     string(TOUPPER ${_folder} _upper)

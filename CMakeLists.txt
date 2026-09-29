@@ -89,7 +89,7 @@ endif()
 
 # Declared before options.cmake so BUILD_MODULE_* exists on the first configure.
 # Sources are resolved later: local checkout if present, otherwise a git fetch.
-set(MODULE_NAMES TRANSMOG DUALSPEC ACHIEVEMENTS BARBER)
+set(MODULE_NAMES TRANSMOG DUALSPEC ACHIEVEMENTS BARBER IMMERSIVE)
 
 # set default buildoptions and print them
 include(cmake/options.cmake)
