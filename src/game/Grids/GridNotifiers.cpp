@@ -26,6 +26,7 @@
 #include "Globals/ObjectAccessor.h"
 #include "BattleGround/BattleGroundMgr.h"
 #include "AI/BaseAI/UnitAI.h"
+#include "Entities/Creature.h"
 
 using namespace MaNGOS;
 
@@ -265,6 +266,9 @@ void MaNGOS::CallOfHelpCreatureInRangeDo::operator()(Creature* u)
 bool MaNGOS::AnyAssistCreatureInRangeCheck::operator()(Creature* u)
 {
     if (u == i_funit)
+        return false;
+
+    if (u->GetCreatureInfo()->ExtraFlags & CREATURE_EXTRA_FLAG_NO_RESPOND_ASSIST)
         return false;
 
     if (!u->CanAssistInCombatAgainst(i_funit, i_enemy))

@@ -18,6 +18,7 @@
 
 #include "AI/BaseAI/CreatureAI.h"
 #include "Grids/GridNotifiers.h"
+#include "Entities/Creature.h"
 #include "Grids/GridNotifiersImpl.h"
 #include "Grids/CellImpl.h"
 #include "World/World.h"
@@ -224,6 +225,8 @@ void CreatureAI::OnCallForHelp(Unit* enemy)
 void CreatureAI::HandleAssistanceCall(Unit* sender, Unit* invoker)
 {
     if (!invoker || m_creature->IsCritter())
+        return;
+    if (m_creature->GetCreatureInfo()->ExtraFlags & CREATURE_EXTRA_FLAG_NO_RESPOND_ASSIST)
         return;
     if (m_creature->CanAssist(sender) && m_creature->CanAttackOnSight(invoker) && invoker->IsVisibleForOrDetect(m_creature, m_creature, false))
     {

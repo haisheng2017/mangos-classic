@@ -155,6 +155,7 @@ class instance_scholomance : public ScriptedInstance
     private:
         void DoSpawnGandlingIfCan(bool bByPlayerEnter);
         void DoRespawnEntranceRoom(Player* pSummoner);
+        void UseClassroomDoor(uint32 uiEventId, uint32 uiData);
 
         uint32 m_uiGambitTransformTimer;
         uint32 m_auiEncounter[MAX_ENCOUNTER];
