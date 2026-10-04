@@ -64,6 +64,7 @@ enum CreatureFlagsExtra
     CREATURE_EXTRA_FLAG_WALK_IN_WATER          = 0x00008000,       // 32768 creature is forced to walk in water even it can swim
     CREATURE_EXTRA_FLAG_CIVILIAN               = 0x00010000,       // 65536 CreatureInfo->civilian substitute (for new expansions)
     CREATURE_EXTRA_FLAG_NO_MELEE               = 0x00020000,       // 131072 creature can't melee
+    CREATURE_EXTRA_FLAG_NO_RESPOND_ASSIST      = 0x00040000,       // 262144 creature does not answer other creatures' call for assistance
     CREATURE_EXTRA_FLAG_FORCE_ATTACKING_CAPABILITY = 0x00080000,   // 524288 SetForceAttackingCapability(true); for nonattackable, nontargetable creatures that should be able to attack nontheless
     CREATURE_EXTRA_FLAG_DYNGUID                = 0x00100000,       // 1048576 Temporary transition flag - spawns of this entry use dynguid system
     CREATURE_EXTRA_FLAG_COUNT_SPAWNS           = 0x00200000,       // 2097152 count creature spawns in Map*

@@ -182,27 +182,27 @@ void instance_scholomance::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_MALICIA:                                  // TODO this code can be simplified, when it is known which event-ids correspond to which room
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_MALICIA].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_MALICIA, uiData);
             break;
         case TYPE_THEOLEN:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_THEOLEN].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_THEOLEN, uiData);
             break;
         case TYPE_POLKELT:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_POLKELT].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_POLKELT, uiData);
             break;
         case TYPE_RAVENIAN:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_RAVENIAN].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_RAVENIAN, uiData);
             break;
         case TYPE_ALEXEI_BAROV:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_BAROV].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_BAROV, uiData);
             break;
         case TYPE_ILLUCIA_BAROV:
             m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(m_mGandlingData[EVENT_ID_ILLUCIA].m_doorGuid);
+            UseClassroomDoor(EVENT_ID_ILLUCIA, uiData);
             break;
         case TYPE_GANDLING:
             m_auiEncounter[uiType] = uiData;
@@ -259,6 +259,26 @@ void instance_scholomance::DoSpawnGandlingIfCan(bool bByPlayerEnter)
                 DoScriptText(SAY_GANDLING_SPAWN, pGandling);
         }
     }
+}
+
+void instance_scholomance::UseClassroomDoor(uint32 uiEventId, uint32 uiData)
+{
+    GandlingEventMap::iterator find = m_mGandlingData.find(uiEventId);
+    if (find == m_mGandlingData.end())
+        return;
+
+    // Gandling's portal event owns the same doors; leave them to HandlePortalEvent.
+    if (find->second.m_bIsActive)
+        return;
+
+    GameObject* pGo = instance->GetGameObject(find->second.m_doorGuid);
+    if (!pGo)
+        return;
+
+    if (uiData == IN_PROGRESS)
+        pGo->UseOpenableObject(false);
+    else if (uiData == FAIL || uiData == DONE)
+        pGo->UseOpenableObject(true);
 }
 
 void instance_scholomance::HandlePortalEvent(uint32 uiEventId, uint32 uiData)
