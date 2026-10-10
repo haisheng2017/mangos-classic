@@ -1054,8 +1054,10 @@ void PathFinder::createFilter()
     else if (m_sourceUnit->GetTypeId() == TYPEID_UNIT)
     {
         Creature* creature = (Creature*)m_sourceUnit;
+        // NOTE: local patch — creatures must not traverse steep faces
+        // (align with non-playerbots upstream, which gives creatures NAV_GROUND only)
         if (creature->CanWalk())
-            includeFlags |= (NAV_GROUND | NAV_GROUND_STEEP);          // walk
+            includeFlags |= NAV_GROUND;          // walk
 
         // creatures don't take environmental damage
         if (creature->CanSwim())
